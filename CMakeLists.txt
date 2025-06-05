@@ -38,6 +38,7 @@ configure_headers(configured_headers
 
 ## Headers:
 set(headers
+    include/arba/dpat/singleton/singleton.hpp
     include/arba/dpat/state/state.hpp
     include/arba/dpat/state/state_machine.hpp
     include/arba/dpat/state/basic_state.hpp
