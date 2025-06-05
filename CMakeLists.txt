@@ -38,7 +38,10 @@ configure_headers(configured_headers
 
 ## Headers:
 set(headers
-    include/arba/dpat/dpat.hpp
+    include/arba/dpat/state/state.hpp
+    include/arba/dpat/state/state_machine.hpp
+    include/arba/dpat/state/basic_state.hpp
+    include/arba/dpat/state/basic_state_machine.hpp
 )
 
 ## Add C++ library:
