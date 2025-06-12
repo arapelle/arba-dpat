@@ -12,6 +12,7 @@ template <class AbstractStateType>
 class basic_state_machine
 {
 public:
+    using abstract_state = AbstractStateType;
     using abstract_state_siptr = typename AbstractStateType::abstract_state_siptr;
 
     explicit basic_state_machine(abstract_state_siptr state_siptr = abstract_state_siptr())
@@ -44,17 +45,22 @@ public:
 protected:
     template <typename CallbackType, typename... Args>
         requires requires(AbstractStateType* ptr, CallbackType callback, Args&&... args) {
-            { (ptr->*callback)(std::forward<Args>(args)...) } -> std::convertible_to<abstract_state_siptr>;
+            { (ptr->*callback)(std::forward<Args>(args)...) };
         }
-    void invoke(CallbackType callback, Args&&... args)
+    decltype(auto) invoke(CallbackType callback, Args&&... args)
     {
         assert(has_state());
+        abstract_state_siptr executing_state_siptr = current_state_;
+        decltype(auto) result = (executing_state_siptr.get()->*callback)(std::forward<Args>(args)...);
+        if (!current_state_) [[likely]]
+            executing_state_siptr->invalidate();
+        return result;
+    }
 
-        abstract_state_siptr current_state = (current_state_.get()->*callback)(std::forward<Args>(args)...);
-        if (current_state) [[likely]]
-            current_state_ = std::move(current_state);
-        else
-            invalidate_and_reset_state_();
+public:
+    void set_state(abstract_state_siptr state_siptr)
+    {
+        current_state_ = std::move(state_siptr);
     }
 
 private:
