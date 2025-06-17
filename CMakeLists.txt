@@ -43,6 +43,7 @@ set(headers
     include/arba/dpat/state/state_machine.hpp
     include/arba/dpat/state/basic_state.hpp
     include/arba/dpat/state/basic_state_machine.hpp
+    include/arba/dpat/under/under.hpp
 )
 
 ## Add C++ library:
