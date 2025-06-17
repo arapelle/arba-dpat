@@ -1,7 +1,7 @@
 #pragma once
 
-#include <type_traits>
 #include <cassert>
+#include <type_traits>
 
 inline namespace arba
 {
@@ -22,14 +22,11 @@ class under
 {
 protected:
     under()
-        requires ((SuperiorTraits & hierarchy_superior_traits::optional) > 0)
-    {}
-
-    explicit under(SuperiorType& superior)
-        : superior_ptr_(&superior)
+        requires((SuperiorTraits & hierarchy_superior_traits::optional) > 0)
     {
-        assert(&superior);
     }
+
+    explicit under(SuperiorType& superior) : superior_ptr_(&superior) { assert(&superior); }
 
     [[nodiscard]] inline bool has_superior() const noexcept
     {
@@ -39,10 +36,19 @@ protected:
             return superior_ptr_;
     }
 
-    [[nodiscard]] inline const SuperiorType& superior() const noexcept { assert(has_superior()); return *superior_ptr_; }
-    [[nodiscard]] inline SuperiorType& superior() noexcept { assert(has_superior()); return *superior_ptr_; }
+    [[nodiscard]] inline const SuperiorType& superior() const noexcept
+    {
+        assert(has_superior());
+        return *superior_ptr_;
+    }
+    [[nodiscard]] inline SuperiorType& superior() noexcept
+    {
+        assert(has_superior());
+        return *superior_ptr_;
+    }
 
-    inline void set_superior(SuperiorType& superior) noexcept requires (SuperiorTraits > 0)
+    inline void set_superior(SuperiorType& superior) noexcept
+        requires(SuperiorTraits > 0)
     {
         assert(&superior);
         superior_ptr_ = &superior;
@@ -81,5 +87,5 @@ private:
     SuperiorType* superior_ptr_ = nullptr;
 };
 
-}
-}
+} // namespace dpat
+} // namespace arba

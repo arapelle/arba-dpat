@@ -1,8 +1,8 @@
 #pragma once
 
-#include <arba/meta/type_traits/crtp.hpp>
 #include <arba/itru/intrusive_ref_counter.hpp>
 #include <arba/itru/shared_intrusive_ptr.hpp>
+#include <arba/meta/type_traits/crtp.hpp>
 
 #include <type_traits>
 

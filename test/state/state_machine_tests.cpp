@@ -25,7 +25,10 @@ class state_machine : public dpat::state_machine<state_machine, abstract_state>
 public:
     using base_::base_;
 
-    inline void manage_event(char pressed_char) { this->base_::invoke(&abstract_state::manage_event, *this, pressed_char); }
+    inline void manage_event(char pressed_char)
+    {
+        this->base_::invoke(&abstract_state::manage_event, *this, pressed_char);
+    }
 };
 
 //---
@@ -47,7 +50,7 @@ public:
         return dest;
     }
 
-    virtual void manage_event(state_machine& , char pressed_char) override
+    virtual void manage_event(state_machine&, char pressed_char) override
     {
         if (pressed_char == 'A')
             *p_a_pressed_ = true;
@@ -77,9 +80,7 @@ public:
         return dest;
     }
 
-    virtual void manage_event(state_machine& , char ) override
-    {
-    }
+    virtual void manage_event(state_machine&, char) override {}
 
     virtual void invalidate() override { reset_shared_state_pointers(previous_state_); }
 
@@ -89,7 +90,7 @@ private:
 
 first_state::first_state(bool& valid, bool& a_pressed)
     : pvalid_(&valid), p_a_pressed_(&a_pressed),
-    next_state_(itru::make_shared_intrusive_ptr<second_state>(itru::shared_intrusive_ptr<first_state>(this)))
+      next_state_(itru::make_shared_intrusive_ptr<second_state>(itru::shared_intrusive_ptr<first_state>(this)))
 {
 }
 

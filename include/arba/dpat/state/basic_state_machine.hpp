@@ -42,17 +42,13 @@ public:
 
     [[nodiscard]] inline const abstract_state_siptr& state() const { return current_state_; }
 
-    void set_state(abstract_state_siptr state_siptr)
-    {
-        current_state_ = std::move(state_siptr);
-    }
+    void set_state(abstract_state_siptr state_siptr) { current_state_ = std::move(state_siptr); }
 
 protected:
     template <typename CallbackType, typename... Args>
         requires requires(AbstractStateType* ptr, CallbackType callback, Args&&... args) {
             { (ptr->*callback)(std::forward<Args>(args)...) };
-        }
-                 && (!std::is_void_v< std::invoke_result_t<CallbackType, AbstractStateType, Args&&...> > )
+        } && (!std::is_void_v<std::invoke_result_t<CallbackType, AbstractStateType, Args && ...>>)
     decltype(auto) invoke(CallbackType callback, Args&&... args)
     {
         assert(has_state());
