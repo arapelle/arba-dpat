@@ -74,7 +74,7 @@ private:
 
 first_state::first_state(bool& valid)
     : pvalid_(&valid),
-    next_state_(itru::make_shared_intrusive_ptr<second_state>(itru::shared_intrusive_ptr<first_state>(this)))
+      next_state_(itru::make_shared_intrusive_ptr<second_state>(itru::shared_intrusive_ptr<first_state>(this)))
 {
 }
 
@@ -89,8 +89,7 @@ int main()
     int src = 42;
     int offset = 1000;
 
-    abstract_state_siptr gen_int =
-        itru::make_shared_intrusive_ptr<ex::first_state>(std::ref(valid));
+    abstract_state_siptr gen_int = itru::make_shared_intrusive_ptr<ex::first_state>(std::ref(valid));
     ex::state_machine stm(std::move(gen_int));
 
     while (stm.has_state())

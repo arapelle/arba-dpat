@@ -17,10 +17,10 @@ public:
     using dpat::under<graphics_engine>::has_superior;
 
     [[nodiscard]] inline const graphics_engine& engine() const { return this->superior(); }
-    [[nodiscard]] inline       graphics_engine& engine()       { return this->superior(); }
+    [[nodiscard]] inline graphics_engine& engine() { return this->superior(); }
 
     [[nodiscard]] inline const application& app() const { return this->superior<application>(); }
-    [[nodiscard]] inline       application& app()       { return this->superior<application>(); }
+    [[nodiscard]] inline application& app() { return this->superior<application>(); }
 };
 
 class graphics_engine : public dpat::under<application>
@@ -31,7 +31,7 @@ public:
     using dpat::under<application>::has_superior;
 
     [[nodiscard]] inline const application& app() const { return this->superior(); }
-    [[nodiscard]] inline       application& app()       { return this->superior(); }
+    [[nodiscard]] inline application& app() { return this->superior(); }
 
     scene_node root_scene_node;
 };

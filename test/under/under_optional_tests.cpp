@@ -23,22 +23,25 @@ public:
     using dpat::under<graphics_engine, hierarchy_superior_traits>::set_superior;
 
     [[nodiscard]] inline const graphics_engine& engine() const { return this->superior(); }
-    [[nodiscard]] inline       graphics_engine& engine()       { return this->superior(); }
+    [[nodiscard]] inline graphics_engine& engine() { return this->superior(); }
 
     [[nodiscard]] inline const application& app() const { return this->superior<application>(); }
-    [[nodiscard]] inline       application& app()       { return this->superior<application>(); }
+    [[nodiscard]] inline application& app() { return this->superior<application>(); }
 };
 
 class graphics_engine : public dpat::under<application, hierarchy_superior_traits>
 {
 public:
-    explicit graphics_engine(application& app) : dpat::under<application, hierarchy_superior_traits>(app), root_scene_node(*this) {}
+    explicit graphics_engine(application& app)
+        : dpat::under<application, hierarchy_superior_traits>(app), root_scene_node(*this)
+    {
+    }
 
     using dpat::under<application, hierarchy_superior_traits>::has_superior;
     using dpat::under<application, hierarchy_superior_traits>::set_superior;
 
     [[nodiscard]] inline const application& app() const { return this->superior(); }
-    [[nodiscard]] inline       application& app()       { return this->superior(); }
+    [[nodiscard]] inline application& app() { return this->superior(); }
 
     void set_node()
     {
